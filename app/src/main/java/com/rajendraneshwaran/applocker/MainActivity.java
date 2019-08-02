@@ -9,14 +9,16 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    public GridLayout mainGridLayout;
+    public GridLayout mainGrid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainGridLayout = (GridLayout)findViewById(R.id.mainGrid);
-        setSingleGridLayout(mainGridLayout);
+        //android.support.v7.widget.GridLayout grid = (android.support.v7.widget.GridLayout)findViewById(R.id.mainGrid);
+
+        mainGrid = (GridLayout)findViewById(R.id.mainGrid);
+        setSingleGridLayout(mainGrid);
     }
 
     private void setSingleGridLayout(GridLayout mGridLayout)
@@ -34,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, AppsLock.class);
                         startActivity(intent);
                         break;
+
+                        default:
+                            break;
                     }
                 }
             });
