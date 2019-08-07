@@ -2,15 +2,14 @@ package com.rajendraneshwaran.applocker;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
-public class AppsLock extends AppCompatActivity {
+public class FolderLock extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_apps_lock);
+        setContentView(R.layout.activity_folder_lock);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

@@ -14,9 +14,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //android.support.v7.widget.GridLayout grid = (android.support.v7.widget.GridLayout)findViewById(R.id.mainGrid);
-
+        
         mainGrid = (GridLayout)findViewById(R.id.mainGrid);
         setSingleGridLayout(mainGrid);
     }
@@ -36,6 +34,44 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, AppsLock.class);
                         startActivity(intent);
                         break;
+                        case 1:
+                            Intent pl = new Intent(MainActivity.this, PhotoLock.class);
+                            startActivity(pl);
+                            break;
+                        case 2:
+                            Intent vl = new Intent(MainActivity.this, VideoLock.class);
+                            startActivity(vl);
+                            break;
+                        case 3:
+                            Intent fl = new Intent(MainActivity.this, FolderLock.class);
+                            startActivity(fl);
+                            break;
+                        case 4:
+                            Intent gl = new Intent(MainActivity.this, GroupAppLock.class);
+                            startActivity(gl);
+                            break;
+                        case 5:
+                            Intent flo = new Intent(MainActivity.this, FilesLock.class);
+                            startActivity(flo);
+                            break;
+                        case 6:
+                            Intent sl = new Intent(MainActivity.this, SiteLock.class);
+                            startActivity(sl);
+                            break;
+                        case 7:
+                            Intent nl = new Intent(MainActivity.this, NoteLock.class);
+                            startActivity(nl);
+                            break;
+                        /*case 8:
+                            Intent intent = new Intent(MainActivity.this, AppsLock.class);
+                            startActivity(intent);
+                            break;
+                        case 9:
+                            Intent intent = new Intent(MainActivity.this, AppsLock.class);
+                            startActivity(intent);
+                            break;*/
+
+
 
                         default:
                             break;

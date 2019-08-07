@@ -16,7 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AppsLock"></activity>
+        <activity android:name=".AppsLock" />
+        <activity android:name=".PhotoLock" />
+        <activity android:name=".VideoLock" />
+        <activity android:name=".FolderLock" />
+        <activity android:name=".FilesLock" />
+        <activity android:name=".NoteLock" />
+        <activity android:name=".GroupAppLock" />
+        <activity android:name=".SiteLock"></activity>
     </application>
 
 </manifest>
