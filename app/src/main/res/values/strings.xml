@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AppLocker</string>
+    <string name="cPinTxt">Please Create a PIN</string>
+    <string name="RePinTxt">Confirm your PIN</string>
 </resources>

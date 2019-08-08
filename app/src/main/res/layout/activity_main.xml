@@ -48,4 +48,15 @@
         app:keypadTextColor="@color/white"
         app:keypadTextSize="18dp" />
 
+    <TextView
+        android:id="@+id/cPinTxt"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/cPinTxt"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
 </RelativeLayout>
