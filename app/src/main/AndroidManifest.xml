@@ -23,7 +23,9 @@
         <activity android:name=".FilesLock" />
         <activity android:name=".NoteLock" />
         <activity android:name=".GroupAppLock" />
-        <activity android:name=".SiteLock"></activity>
+        <activity android:name=".SiteLock" />
+        <activity android:name=".PinView"/>
+
     </application>
 
 </manifest>
