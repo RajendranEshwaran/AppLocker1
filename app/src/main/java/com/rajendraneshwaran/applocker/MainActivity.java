@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String MyPREFERENCES = "MyPrefs" ;
     public static final String accessPin = "AccessPin";
     SharedPreferences sharedpreferences;
+    String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         if(pinValue.toString().isEmpty())
         {
             // Create Pin
+            if(pinValue == password)
+            {
+                // Password correct!!
+            }
         }
         if(!pinValue.toString().isEmpty())
         {
