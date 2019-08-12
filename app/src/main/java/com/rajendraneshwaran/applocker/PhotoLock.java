@@ -6,16 +6,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.Toast;
+
+import com.rajendraneshwaran.applocker.Adapter.PhotoGridAdapter;
 
 import java.io.File;
 
 public class PhotoLock extends AppCompatActivity {
 
-    String rootPath = "/AppLocker/";
+    private String rootPath = "/AppLocker/";
+    private GridView gridView;
+    private String txt[] ={"1","2"};
+    private int gridImage[]={R.drawable.plus1,R.drawable.plus1};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_lock);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -32,6 +42,16 @@ public class PhotoLock extends AppCompatActivity {
         }catch(Exception e){
             e.printStackTrace();
         }
+
+        gridView = (GridView)findViewById(R.id.photoGridView);
+        PhotoGridAdapter gridAdapter = new PhotoGridAdapter(PhotoLock.this,gridImage,txt);
+        gridView.setAdapter(gridAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), txt[position],Toast.LENGTH_SHORT ).show();
+            }
+        });
     }
 
     @Override
