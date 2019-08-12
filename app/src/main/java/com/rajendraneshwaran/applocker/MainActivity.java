@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String accessPin = "AccessPin";
     SharedPreferences sharedpreferences;
     String password;
+    public boolean isSuccess = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +78,13 @@ public class MainActivity extends AppCompatActivity {
             editor.putString(accessPin, pin);
             editor.commit();
 
-            Intent intent = new Intent(MainActivity.this, PinView.class);
-            startActivity(intent);
+            if(isSuccess)
+            {
+                isSuccess = false;
+                Intent intent = new Intent(MainActivity.this, PinView.class);
+                startActivity(intent);
+            }
+
         }
 
         @Override
