@@ -1,12 +1,17 @@
 package com.rajendraneshwaran.applocker.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.speech.RecognitionListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.rajendraneshwaran.applocker.R;
 
@@ -68,7 +73,39 @@ public class PhotoGridAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.custom_layout_photolock,null );
             ImageView icon = (ImageView) convertView.findViewById(R.id.icons);
             icon.setImageResource(icons[position]);
+            //scaleImage(icon);
         }
         return convertView;
+    }
+
+    private void scaleImage(ImageView view) {
+        Drawable drawing = view.getDrawable();
+        if (drawing == null) {
+            return;
+        }
+        Bitmap bitmap = ((BitmapDrawable) drawing).getBitmap();
+
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int xBounding = ((View) view.getParent()).getWidth();//EXPECTED WIDTH
+        int yBounding = ((View) view.getParent()).getHeight();//EXPECTED HEIGHT
+
+        float xScale = ((float) xBounding) / width;
+        float yScale = ((float) yBounding) / height;
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(xScale, yScale);
+
+        Bitmap scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
+        width = scaledBitmap.getWidth();
+        height = scaledBitmap.getHeight();
+        BitmapDrawable result = new BitmapDrawable(context.getResources(), scaledBitmap);
+
+        view.setImageDrawable(result);
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
+        params.width = width;
+        params.height = height;
+        view.setLayoutParams(params);
     }
 }

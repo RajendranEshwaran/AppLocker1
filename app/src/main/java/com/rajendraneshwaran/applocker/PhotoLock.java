@@ -19,8 +19,8 @@ public class PhotoLock extends AppCompatActivity {
 
     private String rootPath = "/AppLocker/";
     private GridView gridView;
-    private String txt[] ={"1","2"};
-    private int gridImage[]={R.drawable.plus1,R.drawable.plus1};
+    private String txt[] ={"1","2","3","4","5"};
+    private int gridImage[]={R.drawable.plus1,R.drawable.plus1,R.drawable.test1,R.drawable.test2,R.drawable.test3};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
