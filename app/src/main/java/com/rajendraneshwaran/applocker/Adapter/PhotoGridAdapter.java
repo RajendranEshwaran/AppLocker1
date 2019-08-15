@@ -15,15 +15,19 @@ import android.widget.LinearLayout;
 
 import com.rajendraneshwaran.applocker.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PhotoGridAdapter extends BaseAdapter {
 
 
-    private int icons[];
-    private String iconsname[];
+    //private int icons[];
+    private List<Integer> icons = new ArrayList<Integer>();
+    private List<String> iconsname = new ArrayList<String>();
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public PhotoGridAdapter(Context context,int icons[],String iconsname[])
+    public PhotoGridAdapter(Context context, List<Integer> icons, List<String> iconsname)
     {
         this.context = context;
         this.icons = icons;
@@ -36,7 +40,7 @@ public class PhotoGridAdapter extends BaseAdapter {
      */
     @Override
     public int getCount() {
-        return iconsname.length;
+        return iconsname.size();
     }
 
     /**
@@ -48,7 +52,7 @@ public class PhotoGridAdapter extends BaseAdapter {
      */
     @Override
     public Object getItem(int position) {
-        return iconsname[position];
+        return iconsname.get(position);
     }
 
     /**
@@ -72,7 +76,7 @@ public class PhotoGridAdapter extends BaseAdapter {
             layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.custom_layout_photolock,null );
             ImageView icon = (ImageView) convertView.findViewById(R.id.icons);
-            icon.setImageResource(icons[position]);
+            icon.setImageResource(icons.get(position));
             //scaleImage(icon);
         }
         return convertView;

@@ -1,7 +1,12 @@
 package com.rajendraneshwaran.applocker;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,13 +19,19 @@ import android.widget.Toast;
 import com.rajendraneshwaran.applocker.Adapter.PhotoGridAdapter;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PhotoLock extends AppCompatActivity {
 
     private String rootPath = "/AppLocker/";
     private GridView gridView;
-    private String txt[] ={"1","2","3","4","5"};
-    private int gridImage[]={R.drawable.plus1,R.drawable.plus1,R.drawable.test1,R.drawable.test2,R.drawable.test3};
+    private List<String> imageName= new ArrayList<String>();
+    //private int gridImage[]={R.drawable.plus1};
+    private List<Integer> gridImage = new ArrayList<Integer>();
+    private PhotoGridAdapter gridAdapter;
+    private static final int SELECT_PICTURE = 1;
+    private String selectedImagePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +55,59 @@ public class PhotoLock extends AppCompatActivity {
         }
 
         gridView = (GridView)findViewById(R.id.photoGridView);
-        PhotoGridAdapter gridAdapter = new PhotoGridAdapter(PhotoLock.this,gridImage,txt);
+        gridImage.add(R.drawable.plus1);
+        gridImage.add(R.drawable.plus1);
+
+        imageName.add("1");
+        imageName.add("2");
+
+        gridAdapter = new PhotoGridAdapter(PhotoLock.this,gridImage,imageName);
         gridView.setAdapter(gridAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), txt[position],Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getApplicationContext(), imageName.get(position),Toast.LENGTH_SHORT ).show();
+
+                Intent i = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                startActivityForResult(i, SELECT_PICTURE);
+
+
             }
         });
+
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+                Uri selectedImageUri = data.getData();
+                selectedImagePath = getPath(selectedImageUri);
+                System.out.println("Image Path : " + selectedImagePath);
+                reloadGridView();
+               // img.setImageURI(selectedImageUri);
+               // imageView.setImageBitmap(BitmapFactory.decodeFile(selectedImagePath));
+            }
+        }
+    }
+
+    public String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    private void reloadGridView()
+    {
+        gridImage.add(R.drawable.test1);
+        imageName.add("3");
+        gridAdapter.notifyDataSetChanged();
+        gridView.setAdapter(gridAdapter);
+        System.out.println("Image Path : " + gridImage.size());
+
     }
 
     @Override
