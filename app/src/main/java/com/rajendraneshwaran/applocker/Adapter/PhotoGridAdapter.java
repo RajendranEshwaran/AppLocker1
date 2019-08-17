@@ -1,7 +1,9 @@
 package com.rajendraneshwaran.applocker.Adapter;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -15,6 +17,9 @@ import android.widget.LinearLayout;
 
 import com.rajendraneshwaran.applocker.R;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +27,12 @@ public class PhotoGridAdapter extends BaseAdapter {
 
 
     //private int icons[];
-    private List<Integer> icons = new ArrayList<Integer>();
+    private List<String> icons = new ArrayList<String>();
     private List<String> iconsname = new ArrayList<String>();
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public PhotoGridAdapter(Context context, List<Integer> icons, List<String> iconsname)
+    public PhotoGridAdapter(Context context, List<String> icons, List<String> iconsname)
     {
         this.context = context;
         this.icons = icons;
@@ -73,10 +78,37 @@ public class PhotoGridAdapter extends BaseAdapter {
        // View gridview = convertView;
         if(convertView == null)
         {
+            ContextWrapper cw = new ContextWrapper(context);
             layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.custom_layout_photolock,null );
             ImageView icon = (ImageView) convertView.findViewById(R.id.icons);
-            icon.setImageResource(icons.get(position));
+
+            if(position == 0)
+            {
+                    icon.setImageResource(R.drawable.plus1);
+            }
+            else
+            {
+                try {
+                    String path = icons.get(--position);
+                    String stringYouWant = path.substring(path.lastIndexOf("/"), path.length());
+                    String rootPath="";
+                    String sourcePath =stringYouWant;
+
+                    File f=new File("/storage/emulated/0/DCIM/Camera/", stringYouWant);
+                    Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                    icon.setImageBitmap(b);
+                }
+                catch (FileNotFoundException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+//            icon.setImageResource(Integer.parseInt(icons.get(position)));
+//            File directory = cw.getDir("/Camera/", Context.MODE_PRIVATE);
+//            File mypath=new File(directory,"IMG_20190815_120632.jpg");
+//            icon.setImageDrawable(Drawable.createFromPath(mypath.toString()));
             //scaleImage(icon);
         }
         return convertView;

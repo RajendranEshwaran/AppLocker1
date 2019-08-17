@@ -28,10 +28,11 @@ public class PhotoLock extends AppCompatActivity {
     private GridView gridView;
     private List<String> imageName= new ArrayList<String>();
     //private int gridImage[]={R.drawable.plus1};
-    private List<Integer> gridImage = new ArrayList<Integer>();
+    private List<String> gridImage = new ArrayList<String>();
     private PhotoGridAdapter gridAdapter;
     private static final int SELECT_PICTURE = 1;
     private String selectedImagePath;
+    String imageUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,8 @@ public class PhotoLock extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle("Photo Lock");
+
+        // imageUri = "drawable://" + R.drawable.plus1;
 
         File dir = new File(Environment.getExternalStorageDirectory()+rootPath+"PhotoLock");
         try{
@@ -55,11 +58,12 @@ public class PhotoLock extends AppCompatActivity {
         }
 
         gridView = (GridView)findViewById(R.id.photoGridView);
-        gridImage.add(R.drawable.plus1);
-        gridImage.add(R.drawable.plus1);
 
+        String imageUrl = getURLForResource(R.drawable.plus1);
+
+        // Values adding into ArrayList
         imageName.add("1");
-        imageName.add("2");
+        gridImage.add(imageUrl);
 
         gridAdapter = new PhotoGridAdapter(PhotoLock.this,gridImage,imageName);
         gridView.setAdapter(gridAdapter);
@@ -68,15 +72,17 @@ public class PhotoLock extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(), imageName.get(position),Toast.LENGTH_SHORT ).show();
 
-                Intent i = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(i, SELECT_PICTURE);
+        Intent i = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(i, SELECT_PICTURE);
 
 
             }
         });
+    }
 
-
+    public String getURLForResource (int resourceId) {
+        return Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + resourceId).toString();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -85,6 +91,7 @@ public class PhotoLock extends AppCompatActivity {
                 Uri selectedImageUri = data.getData();
                 selectedImagePath = getPath(selectedImageUri);
                 System.out.println("Image Path : " + selectedImagePath);
+
                 reloadGridView();
                // img.setImageURI(selectedImageUri);
                // imageView.setImageBitmap(BitmapFactory.decodeFile(selectedImagePath));
@@ -102,7 +109,6 @@ public class PhotoLock extends AppCompatActivity {
 
     private void reloadGridView()
     {
-        gridImage.add(R.drawable.test1);
         imageName.add("3");
         gridAdapter.notifyDataSetChanged();
         gridView.setAdapter(gridAdapter);
